@@ -1,8 +1,8 @@
 allow init vfat:file { read open write };
 allow init socket_device:sock_file { create setattr unlink write };
 allow init property_socket:sock_file { read open write };
-allow init system_file:dir { read open write relabelfrom };
-allow init system_file:file { read open write relabelfrom };
-allow init system_file:lnk_file { read open write relabelfrom };
+#allow init system_file:dir { read open write relabelfrom };
+#allow init system_file:file { read open write relabelfrom };
+#allow init system_file:lnk_file { read open write relabelfrom };
 
 domain_trans(init, rootfs, dashd)
