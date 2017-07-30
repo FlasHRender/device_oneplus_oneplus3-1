@@ -26,16 +26,16 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-target=`getprop ro.board.platform`
+target=$(getprop ro.board.platform)
 if [ -f /sys/devices/soc0/soc_id ]; then
-    platformid=`cat /sys/devices/soc0/soc_id`
+    platformid=$(cat /sys/devices/soc0/soc_id)
 else
-    platformid=`cat /sys/devices/system/soc/soc0/id`
+    platformid=$(cat /sys/devices/system/soc/soc0/id)
 fi
 
-start_battery_monitor()
-{
-	if ls /sys/bus/spmi/devices/qpnp-bms-*/fcc_data ; then
+function start_battery_monitor {
+
+	if [ ls /sys/bus/spmi/devices/qpnp-bms-*/fcc_data ]; then
 		chown -h root.system /sys/module/pm8921_bms/parameters/*
 		chown -h root.system /sys/module/qpnp_bms/parameters/*
 		chown -h root.system /sys/bus/spmi/devices/qpnp-bms-*/fcc_data
@@ -50,9 +50,9 @@ start_battery_monitor()
 	fi
 }
 
-start_charger_monitor()
-{
-	if ls /sys/module/qpnp_charger/parameters/charger_monitor; then
+function start_charger_monitor {
+
+	if [ ls /sys/module/qpnp_charger/parameters/charger_monitor ]; then
 		chown -h root.system /sys/module/qpnp_charger/parameters/*
 		chown -h root.system /sys/class/power_supply/battery/input_current_max
 		chown -h root.system /sys/class/power_supply/battery/input_current_trim
@@ -67,8 +67,8 @@ start_charger_monitor()
 	fi
 }
 
-start_vm_bms()
-{
+function start_vm_bms {
+
 	if [ -e /dev/vm_bms ]; then
 		chown -h root.system /sys/class/power_supply/bms/current_now
 		chown -h root.system /sys/class/power_supply/bms/voltage_ocv
@@ -78,32 +78,22 @@ start_vm_bms()
 	fi
 }
 
-start_msm_irqbalance_8939()
-{
-	if [ -f /system/bin/msm_irqbalance ]; then
-		case "$platformid" in
-		    "239" | "293" | "294" | "295" | "304" | "313" | "338")
-			start msm_irqbalance;;
-		esac
-	fi
-}
+function start_msm_irqbalance {
 
-start_msm_irqbalance()
-{
 	if [ -f /system/bin/msm_irqbalance ]; then
 		start msm_irqbalance
 	fi
 }
 
-start_copying_prebuilt_qcril_db()
-{
+function start_copying_prebuilt_qcril_db {
+
     if [ -f /system/vendor/qcril.db -a ! -f /data/misc/radio/qcril.db ]; then
         cp /system/vendor/qcril.db /data/misc/radio/qcril.db
         chown -h radio.radio /data/misc/radio/qcril.db
     fi
 }
 
-baseband=`getprop ro.baseband`
+baseband=$(getprop ro.baseband)
 echo 1 > /proc/sys/net/ipv6/conf/default/accept_ra_defrtr
 
 case "$baseband" in
@@ -113,116 +103,7 @@ case "$baseband" in
 esac
 
 case "$target" in
-    "msm7630_surf" | "msm7630_1x" | "msm7630_fusion")
-        if [ -f /sys/devices/soc0/hw_platform ]; then
-            value=`cat /sys/devices/soc0/hw_platform`
-        else
-            value=`cat /sys/devices/system/soc/soc0/hw_platform`
-        fi
-        case "$value" in
-            "Fluid")
-             start profiler_daemon;;
-        esac
-        ;;
-    "msm8660" )
-        if [ -f /sys/devices/soc0/hw_platform ]; then
-            platformvalue=`cat /sys/devices/soc0/hw_platform`
-        else
-            platformvalue=`cat /sys/devices/system/soc/soc0/hw_platform`
-        fi
-        case "$platformvalue" in
-            "Fluid")
-                start profiler_daemon;;
-        esac
-        ;;
-    "msm8960")
-        case "$baseband" in
-            "msm")
-                start_battery_monitor;;
-        esac
-
-        if [ -f /sys/devices/soc0/hw_platform ]; then
-            platformvalue=`cat /sys/devices/soc0/hw_platform`
-        else
-            platformvalue=`cat /sys/devices/system/soc/soc0/hw_platform`
-        fi
-        case "$platformvalue" in
-             "Fluid")
-                 start profiler_daemon;;
-             "Liquid")
-                 start profiler_daemon;;
-        esac
-        ;;
-    "msm8974")
-        platformvalue=`cat /sys/devices/soc0/hw_platform`
-        case "$platformvalue" in
-             "Fluid")
-                 start profiler_daemon;;
-             "Liquid")
-                 start profiler_daemon;;
-        esac
-        case "$baseband" in
-            "msm")
-                start_battery_monitor
-                ;;
-        esac
-        start_charger_monitor
-        ;;
-    "apq8084")
-        platformvalue=`cat /sys/devices/soc0/hw_platform`
-        case "$platformvalue" in
-             "Fluid")
-                 start profiler_daemon;;
-             "Liquid")
-                 start profiler_daemon;;
-        esac
-        ;;
-    "msm8226")
-        start_charger_monitor
-        ;;
-    "msm8610")
-        start_charger_monitor
-        ;;
-    "msm8916")
-        start_vm_bms
-        start_msm_irqbalance_8939
-        if [ -f /sys/devices/soc0/soc_id ]; then
-            soc_id=`cat /sys/devices/soc0/soc_id`
-        else
-            soc_id=`cat /sys/devices/system/soc/soc0/id`
-        fi
-
-        if [ -f /sys/devices/soc0/platform_subtype_id ]; then
-             platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
-        fi
-        if [ -f /sys/devices/soc0/hw_platform ]; then
-             hw_platform=`cat /sys/devices/soc0/hw_platform`
-        fi
-        case "$soc_id" in
-             "239")
-                  case "$hw_platform" in
-                       "Surf")
-                            case "$platform_subtype_id" in
-                                 "1")
-                                      setprop qemu.hw.mainkeys 0
-                                      ;;
-                            esac
-                            ;;
-                       "MTP")
-                          case "$platform_subtype_id" in
-                               "3")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                          esac
-                          ;;
-                  esac
-                  ;;
-        esac
-        ;;
-    "msm8994" | "msm8992" | "msm8998")
-        start_msm_irqbalance
-        ;;
-    "msm8996")
+    "msm8996"|"msm8996pro")
         if [ -f /sys/devices/soc0/hw_platform ]; then
              hw_platform=`cat /sys/devices/soc0/hw_platform`
         fi
@@ -242,67 +123,6 @@ case "$target" in
                         done
                         ;;
         esac
-        ;;
-    "msm8909")
-        start_vm_bms
-        ;;
-    "msm8937")
-        start_msm_irqbalance_8939
-        if [ -f /sys/devices/soc0/soc_id ]; then
-            soc_id=`cat /sys/devices/soc0/soc_id`
-        else
-            soc_id=`cat /sys/devices/system/soc/soc0/id`
-        fi
-
-        if [ -f /sys/devices/soc0/hw_platform ]; then
-             hw_platform=`cat /sys/devices/soc0/hw_platform`
-        else
-             hw_platform=`cat /sys/devices/system/soc/soc0/hw_platform`
-        fi
-        case "$soc_id" in
-             "294" | "295" | "303" | "307" | "308" | "309" | "313" | "320")
-                  case "$hw_platform" in
-                       "Surf")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                       "MTP")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                       "RCM")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                  esac
-                  ;;
-       esac
-        ;;
-    "msm8953")
-	start_msm_irqbalance_8939
-        if [ -f /sys/devices/soc0/soc_id ]; then
-            soc_id=`cat /sys/devices/soc0/soc_id`
-        else
-            soc_id=`cat /sys/devices/system/soc/soc0/id`
-        fi
-
-        if [ -f /sys/devices/soc0/hw_platform ]; then
-             hw_platform=`cat /sys/devices/soc0/hw_platform`
-        else
-             hw_platform=`cat /sys/devices/system/soc/soc0/hw_platform`
-        fi
-        case "$soc_id" in
-             "293" | "304" | "338" )
-                  case "$hw_platform" in
-                       "Surf")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                       "MTP")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                       "RCM")
-                                    setprop qemu.hw.mainkeys 0
-                                    ;;
-                  esac
-                  ;;
-       esac
         ;;
 esac
 
