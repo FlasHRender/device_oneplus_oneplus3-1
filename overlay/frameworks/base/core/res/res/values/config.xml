@@ -408,4 +408,8 @@
     <bool name="config_button_brightness_support">true</bool>
     <bool name="config_deviceHasVariableButtonBrightness">true</bool>
 
+    <!-- Default value for proximity check on screen wake -->
+    <bool name="config_proximityCheckOnWake">true</bool>
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">true</bool>
+
 </resources>
