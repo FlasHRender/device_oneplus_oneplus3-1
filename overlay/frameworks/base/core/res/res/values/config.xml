@@ -388,8 +388,24 @@
     <!-- If this is true, device supports Sustained Performance Mode. -->
     <bool name="config_sustainedPerformanceModeSupported">true</bool>
 
-
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
-   <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
+    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
+
+    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+         This integer should equal the sum of the corresponding value for each
+         of the following keys present:
+          1 - Home
+          2 - Back
+          4 - Menu
+          8 - Assistant (search)
+          16 - App switch
+          32 - Camera
+       For example, a device with Back, Home and AppSwitch keys would set this
+       config to 19. -->
+    <integer name="config_deviceHardwareKeys">19</integer>
+
+    <!-- Boolean indicating whether we want button brightness support -->
+    <bool name="config_button_brightness_support">true</bool>
+    <bool name="config_deviceHasVariableButtonBrightness">true</bool>
 
 </resources>
