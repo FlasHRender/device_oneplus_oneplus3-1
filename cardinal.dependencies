@@ -1,0 +1,22 @@
+[
+  {
+    "repository": "device_oppo_common",
+    "target_path": "device/oppo/common"
+  },
+
+  {
+    "repository": "kernel_oneplus_msm8996",
+    "target_path": "kernel/oneplus/msm8996"
+  },
+
+  {
+   "repository": "LineageOS/packages_resources_devicesettings",
+   "target_path": "packages/resources/devicesettings",
+   "branch": " lineage-15.0"
+  },
+
+  {
+    "repository": "proprietary_vendor_oneplus",
+    "target_path": "vendor/oneplus"
+  }
+]
