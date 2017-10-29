@@ -352,3 +352,11 @@ case "$buildvariant" in
         echo "4 4 1 4" > /proc/sys/kernel/printk
         ;;
 esac
+
+# Zram disk - 512MB size
+zram_enable=`getprop ro.vendor.qti.config.zram`
+if [ "$zram_enable" == "true" ]; then
+    echo 536870912 > /sys/block/zram0/disksize
+    mkswap /dev/block/zram0
+    swapon /dev/block/zram0 -p 32758
+fi
