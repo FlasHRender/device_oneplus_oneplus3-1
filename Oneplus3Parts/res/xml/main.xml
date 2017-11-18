@@ -30,8 +30,8 @@
         android:summary="@string/doze_category_summary"
         android:persistent="false" >
         <intent android:action="android.intent.action.MAIN"
-                android:targetPackage="org.omnirom.device"
-                android:targetClass="org.omnirom.device.DozeSettingsActivity" />
+                android:targetPackage="org.lineageos.settings.doze"
+                android:targetClass="org.lineageos.settings.doze.DozeSettingsActivity" />
     </Preference>
 
     <PreferenceCategory
@@ -65,34 +65,26 @@
             android:persistent="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/buttons_title">
-        <SwitchPreference
-            android:key="swap_back_recents"
-            android:summary="@string/swap_back_recents_summary"
-            android:title="@string/swap_back_recents_title"
-            android:persistent="false" />
-    </PreferenceCategory>
-
+<!--
     <PreferenceCategory
         android:key="graphics"
         android:title="@string/graphics_title">
-        <!--<SwitchPreference
+        <SwitchPreference
             android:key="srgb"
             android:summary="@string/srgb_mode_summary"
-        android:title="@string/srgb_mode_title" />-->
+        android:title="@string/srgb_mode_title" />
         <SwitchPreference
             android:key="hbm"
             android:summary="@string/hbm_mode_summary"
             android:title="@string/hbm_mode_title" />
-        <!--<SwitchPreference
+        <<SwitchPreference
             android:key="oneplus_mode"
             android:summary="@string/oneplus_mode_summary"
             android:title="@string/oneplus_mode_title" />
         <SwitchPreference
             android:key="night_mode"
             android:summary="@string/night_mode_summary"
-        android:title="@string/night_mode_title" />-->
+        android:title="@string/night_mode_title" />
         <Preference
             android:key="panel_category"
             android:title="@string/panel_category_title"
@@ -103,4 +95,5 @@
                     android:targetClass="org.omnirom.device.PanelSettingsActivity" />
         </Preference>
     </PreferenceCategory>
+-->
 </PreferenceScreen>

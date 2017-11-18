@@ -83,9 +83,6 @@ public class KeyHandler implements DeviceKeyHandler {
     private static final int GESTURE_UP_SWIPE_SCANCODE = 66;
 
     private static final int KEY_DOUBLE_TAP = 143;
-    private static final int KEY_HOME = 102;
-    private static final int KEY_BACK = 158;
-    private static final int KEY_RECENTS = 580;
     private static final int KEY_SLIDER_TOP = 601;
     private static final int KEY_SLIDER_CENTER = 602;
     private static final int KEY_SLIDER_BOTTOM = 603;
@@ -139,7 +136,6 @@ public class KeyHandler implements DeviceKeyHandler {
     private WakeLock mGestureWakeLock;
     private Handler mHandler = new Handler();
     private SettingsObserver mSettingsObserver;
-    private static boolean mButtonDisabled;
     private final NotificationManager mNoMan;
     private final AudioManager mAudioManager;
     private CameraManager mCameraManager;
@@ -215,9 +211,6 @@ public class KeyHandler implements DeviceKeyHandler {
 
         void observe() {
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HARDWARE_KEYS_DISABLE),
-                    false, this);
-            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DEVICE_PROXI_CHECK_ENABLED),
                     false, this);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
@@ -243,7 +236,6 @@ public class KeyHandler implements DeviceKeyHandler {
         }
 
         public void update() {
-            setButtonDisable(mContext);
             mUseProxiCheck = Settings.System.getIntForUser(
                     mContext.getContentResolver(), Settings.System.DEVICE_PROXI_CHECK_ENABLED, 1,
                     UserHandle.USER_CURRENT) == 1;
@@ -344,17 +336,6 @@ public class KeyHandler implements DeviceKeyHandler {
             return true;
         }
         return false;
-    }
-
-    public static void setButtonDisable(Context context) {
-        mButtonDisabled = Settings.System.getIntForUser(
-                context.getContentResolver(), Settings.System.HARDWARE_KEYS_DISABLE, 0,
-                UserHandle.USER_CURRENT) == 1;
-        if (DEBUG) Log.i(TAG, "setButtonDisable=" + mButtonDisabled);
-        if(mButtonDisabled)
-            Utils.writeValue(KEY_CONTROL_PATH, "1");
-        else
-            Utils.writeValue(KEY_CONTROL_PATH, "0");
     }
 
     @Override
