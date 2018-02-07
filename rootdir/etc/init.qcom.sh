@@ -131,6 +131,16 @@ start_copying_prebuilt_qcril_db()
     fi
 }
 
+set_panel_prop()
+{
+    mdss_panel=`getprop mdss_mdp.panel`
+    if [ "$mdss_panel" == "s6e3fa3" ]; then
+        setprop ro.product.panel samsung_s6e3fa3_1080p
+    elif [ "$mdss_panel" == "s6e3fa5" ]; then
+        setprop ro.product.panel samsung_s6e3fa5_1080p
+    fi
+}
+
 baseband=`getprop ro.baseband`
 echo 1 > /proc/sys/net/ipv6/conf/default/accept_ra_defrtr
 
@@ -428,6 +438,11 @@ case "$target" in
        esac
         ;;
 esac
+
+#
+# Set mdss_panel property
+#
+set_panel_prop
 
 #
 # Copy qcril.db if needed for RIL
