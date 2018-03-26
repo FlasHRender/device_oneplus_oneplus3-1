@@ -22,7 +22,7 @@
 #
 
 # Inherit from oppo-common
--include device/oppo/common/BoardConfigCommon.mk
+include device/oppo/common/BoardConfigCommon.mk
 
 PLATFORM_PATH := device/oneplus/oneplus3
 
@@ -33,9 +33,6 @@ BOARD_VENDOR := oneplus
 # Assertions
 TARGET_BOARD_INFO_FILE ?= $(PLATFORM_PATH)/board-info.txt
 TARGET_OTA_ASSERT_DEVICE := OnePlus3,oneplus3,OnePlus3T,oneplus3t
-
-# Use Snapdragon LLVM, if available
-TARGET_USE_SDCLANG := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := msm8996
@@ -62,7 +59,6 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x02000000
@@ -121,7 +117,6 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
-WITH_LINEAGE_CHARGER := false
 
 # CNE and DPM
 BOARD_USES_QCNE := true
@@ -138,7 +133,7 @@ TARGET_USES_OVERLAY := true
 USE_OPENGL_RENDERER := true
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
-OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
+OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
@@ -175,9 +170,6 @@ TARGET_PROVIDES_KEYMASTER := true
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
-
-# Lineage Hardware
-BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/lineagehw
 
 # Mainfest
 DEVICE_MANIFEST_FILE := $(PLATFORM_PATH)/configs/manifest.xml

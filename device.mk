@@ -25,8 +25,7 @@ $(call inherit-product, vendor/oneplus/oneplus3/oneplus3-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -131,7 +130,6 @@ PRODUCT_PACKAGES += \
     android.hardware.soundtrigger@2.0-impl
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/audio/etc/audio_policy_configuration.xml \
@@ -194,7 +192,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap \
+    SnapdragonCamera \
     libcamera_parameters_shim \
     libcamera_shim \
     camera.device@1.0-impl \
@@ -241,10 +239,6 @@ PRODUCT_PACKAGES += \
     qdcm_calib_data_samsung_s6e3fa3_1080p_cmd_mode_dsi_panel.xml \
     qdcm_calib_data_samsung_s6e3fa5_1080p_cmd_mode_dsi_panel.xml
 
-# Doze mode
-PRODUCT_PACKAGES += \
-    OneplusDoze
-
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
@@ -253,7 +247,6 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
-    OneplusPocketMode \
     android.hardware.biometrics.fingerprint@2.1-service
 
 # Gatekeeper HAL
@@ -313,10 +306,6 @@ PRODUCT_PACKAGES += \
     lights.msm8996 \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
-
-# LiveDisplay native
-PRODUCT_PACKAGES += \
-    libjni_livedisplay
 
 # Media
 PRODUCT_COPY_FILES += \
