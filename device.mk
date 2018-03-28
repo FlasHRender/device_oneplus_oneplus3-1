@@ -247,6 +247,7 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
+    OneplusPocketMode \
     android.hardware.biometrics.fingerprint@2.1-service
 
 # Gatekeeper HAL
@@ -356,6 +357,10 @@ PRODUCT_PACKAGES += \
     libOmxVdec \
     libOmxVenc \
     libstagefrighthw
+
+# OneplusDoze
+PRODUCT_PACKAGES += \
+    OneplusDoze
 
 # OneplusParts
 PRODUCT_PACKAGES += \
