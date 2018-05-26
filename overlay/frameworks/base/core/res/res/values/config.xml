@@ -432,4 +432,7 @@
      com.android.internal.os.DeviceKeyHandler interface. -->
     <string name="config_deviceKeyHandlerClass" translatable="false">org.omnirom.device.KeyHandler</string>
 
+    <!-- button brightness -->
+    <bool name="config_button_brightness_support">true</bool>
+
 </resources>
