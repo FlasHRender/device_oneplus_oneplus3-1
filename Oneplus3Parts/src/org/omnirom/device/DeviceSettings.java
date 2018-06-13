@@ -53,7 +53,7 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String KEY_ONEPLUS_SWITCH = "oneplus_mode";
     public static final String KEY_NIGHT_SWITCH = "night_mode";
 
-    public static final String SLIDER_DEFAULT_VALUE = "4,2,0";
+    public static final String SLIDER_DEFAULT_VALUE = "3,2,0";
 
     private VibratorStrengthPreference mVibratorStrength;
     private ListPreference mSliderModeTop;
